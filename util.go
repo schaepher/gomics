@@ -17,9 +17,11 @@ package main
 
 import (
 	"bytes"
+	"io/ioutil"
+	"runtime"
+
 	"github.com/gotk3/gotk3/gdk"
 	"github.com/salviati/gomics/archive"
-	"runtime"
 )
 
 func min(a, b int) int {
@@ -78,4 +80,8 @@ func mustLoadPixbuf(data []byte) *gdk.Pixbuf {
 		panic(err.Error())
 	}
 	return pixbuf
+}
+
+func Asset(filename string) ([]byte, error) {
+	return ioutil.ReadFile(filename)
 }
