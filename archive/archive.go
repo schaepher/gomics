@@ -17,9 +17,11 @@ package archive
 
 import (
 	"errors"
-	"github.com/gotk3/gotk3/gdk"
+	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/gotk3/gotk3/gdk"
 )
 
 var (
@@ -48,6 +50,11 @@ func NewArchive(path string) (Archive, error) {
 		if strings.HasSuffix(strings.ToLower(path), ".tar.gz") {
 			// TODO
 		}
+	default:
+		if _, err := os.Stat(path); os.IsNotExist(err) {
+			return nil, err
+		}
+		return NewDir(path)
 	}
 
 	return nil, errors.New("Unknown archive type")
